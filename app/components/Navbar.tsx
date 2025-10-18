@@ -4,7 +4,7 @@ import { FaGithub } from "react-icons/fa";
 
 const Navbar = () => {
   return (
-    <nav className="sticky top-0 z-50 flex justify-between items-center px-10 py-5 bg-white shadow-sm border-b border-gray-300">
+    <nav className="sticky top-0 z-50 flex justify-between items-center px-10 py-5 bg-white shadow-lg shadow-sm border-b border-gray-300">
       {/* Left: Website Name */}
       <h1 className="text-xl font-bold text-gray-800 cursor-pointer">
         JobFinder
