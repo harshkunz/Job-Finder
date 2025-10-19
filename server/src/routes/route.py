@@ -1,0 +1,41 @@
+from fastapi import APIRouter, UploadFile, File, Form
+from src.gpt_handler import extract_text_from_pdf, ask_openai
+from src.utils.response import success_response, error_response
+from src.job_finder import fetch_linkedin_jobs, fetch_naukri_jobs
+
+router = APIRouter()
+
+@router.post("/upload")
+async def upload_resume(file: UploadFile = File(...)):
+    try:
+        text = extract_text_from_pdf(file)
+        parsed_data = ask_openai(f"Extract skills, experience, education, and contact info from this resume:\n{text}")
+        return success_response(data=parsed_data, message="Resume parsed successfully")
+    except Exception as e:
+        return error_response(message=f"Resume parsing failed: {e}")
+    
+
+@router.post("/search/linkedin")
+async def search_linkedin_jobs(
+    search_query: str = Form(...),
+    location: str = Form("india"),
+    max_jobs: int = Form(30)
+):
+    try:
+        jobs = fetch_linkedin_jobs(search_query, location, max_jobs)
+        return success_response(data=jobs, message=f"Found {len(jobs)} LinkedIn jobs")
+    except Exception as e:
+        return error_response(message=f"LinkedIn job search failed: {e}")
+    
+
+@router.post("/search/naukri")
+async def search_naukri_jobs(
+    search_query: str = Form(...),
+    location: str = Form("india"),
+    max_jobs: int = Form(30)
+):
+    try:
+        jobs = fetch_naukri_jobs(search_query, location, max_jobs)
+        return success_response(data=jobs, message=f"Found {len(jobs)} Naukri jobs")
+    except Exception as e:
+        return error_response(message=f"Naukri job search failed: {e}")

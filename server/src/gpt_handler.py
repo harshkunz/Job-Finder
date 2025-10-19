@@ -1,44 +1,52 @@
+import fitz 
 import os
-from google.auth import load_credentials_from_file
-from google.auth.transport.requests import Request
-from google.auth.credentials import AnonymousCredentials
-from googleapiclient.discovery import build
+from dotenv import load_dotenv
+from openai import OpenAI
 
-# Load credentials from the service account file
-credentials, project = load_credentials_from_file(
-    '/path/to/your/service-account-file.json',
-    scopes=['https://www.googleapis.com/auth/cloud-platform']
-)
+load_dotenv()
 
-# Refresh the credentials if necessary
-if credentials.expired and credentials.refresh_token:
-    credentials.refresh(Request())
-
-# Build the Gemini API client
-gemini = build('gemini', 'v1alpha', credentials=credentials)
+# Load OpenAI API key from .env
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 
-def ask_gemini(prompt, max_tokens=500):
+def extract_text_from_pdf(uploaded_file):
     """
-    Sends a prompt to the Gemini API and returns the response.
+    Extracts text from a PDF file.
     
     Args:
-        prompt (str): The prompt to send to the Gemini API.
-        max_tokens (int): The maximum number of tokens to generate.
+        uploaded_file (str): The path to the PDF file.
         
     Returns:
-        str: The response from the Gemini API.
+        str: The extracted text.
+    """
+    doc = fitz.open(stream=uploaded_file.read(), filetype="pdf")
+    text = ""
+    for page in doc:
+        text += page.get_text()
+    return text
+
+
+def ask_openai(prompt, max_tokens=500, model="gpt-3.5-turbo"):
+    """
+    Sends a prompt to the OpenAI API and returns the response.
+    
+    Args:
+        prompt (str): The prompt to send to the OpenAI API.
+        max_tokens (int): Maximum tokens for response.
+        model (str): OpenAI model to use (default: gpt-3.5-turbo)
+        
+    Returns:
+        str: The response from OpenAI.
     """
     try:
-        response = gemini.projects().locations().models().predict(
-            name='projects/{}/locations/us-central1/models/text-bison-001'.format(project),
-            body={
-                'instances': [{'content': prompt}],
-                'parameters': {'temperature': 0.5, 'maxOutputTokens': max_tokens}
-            }
-        ).execute()
-
-        return response['predictions'][0]['content']
+        response = client.chat.completions.create(
+            model=model,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.5,
+            max_tokens=max_tokens
+        )
+        return response.choices[0].message.content
     except Exception as e:
-        print(f"Error during Gemini API request: {e}")
+        print(f"Error calling OpenAI API: {e}")
         return None

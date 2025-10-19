@@ -67,15 +67,3 @@ def fetch_naukri_jobs(search_query, location="india", max_jobs=30):
     except Exception as e:
         print(f"[Naukri] Job fetch failed: {e}")
         return []
-    
-
-def fetch_jobs(search_query, location="india", max_jobs=30):
-    """
-    Fetch jobs from both LinkedIn and Naukri, merge results.
-    """
-    linkedin_jobs = fetch_linkedin_jobs(search_query, location, max_jobs)
-    naukri_jobs = fetch_naukri_jobs(search_query, location, max_jobs)
-
-    # Merge and return
-    all_jobs = linkedin_jobs + naukri_jobs
-    return all_jobs
