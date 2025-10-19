@@ -1,8 +1,8 @@
-fastapi
+# dependencies
+
 uvicorn
-python-multipart
+fastapi
 pymupdf
-openai
 apify-client
 python-dotenv
-openai
+requests
