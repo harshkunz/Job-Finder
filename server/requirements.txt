@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+python-multipart
+pymupdf
+openai
+apify-client
+python-dotenv
+openai
