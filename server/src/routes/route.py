@@ -1,5 +1,5 @@
 from fastapi import APIRouter, UploadFile, File, Form
-from src.gpt_handler import extract_text_from_pdf, ask_openai
+from src.gpt_handler import extract_text_from_pdf, ask_huggingface
 from src.utils.response import success_response, error_response
 from src.job_finder import fetch_linkedin_jobs, fetch_naukri_jobs
 
@@ -8,12 +8,15 @@ router = APIRouter()
 @router.post("/upload")
 async def upload_resume(file: UploadFile = File(...)):
     try:
-        text = extract_text_from_pdf(file)
-        parsed_data = ask_openai(f"Extract skills, experience, education, and contact info from this resume:\n{text}")
+        file_bytes = await file.read()
+        text = extract_text_from_pdf(file_bytes)
+        parsed_data = ask_huggingface(f"Extract skills, experience, education, and contact info from this resume:\n{text}")
+        print("Response from Hugging Face:")
+        print(parsed_data)
         return success_response(data=parsed_data, message="Resume parsed successfully")
     except Exception as e:
         return error_response(message=f"Resume parsing failed: {e}")
-    
+
 
 @router.post("/search/linkedin")
 async def search_linkedin_jobs(
@@ -26,7 +29,7 @@ async def search_linkedin_jobs(
         return success_response(data=jobs, message=f"Found {len(jobs)} LinkedIn jobs")
     except Exception as e:
         return error_response(message=f"LinkedIn job search failed: {e}")
-    
+
 
 @router.post("/search/naukri")
 async def search_naukri_jobs(

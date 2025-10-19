@@ -9,7 +9,7 @@ interface ResumeAnalysisProps {
 
 const ResumeAnalysis: React.FC<ResumeAnalysisProps> = ({ onFindJobs }) => {
   const initialData = {
-    summary: "***",
+    role: "***",
     qualification: "***",
     skills: ['***',],
     projects: ['***',]
@@ -75,7 +75,7 @@ const ResumeAnalysis: React.FC<ResumeAnalysisProps> = ({ onFindJobs }) => {
         {/* Resume Cards */}
         <div className="flex flex-col gap-6">
           {[
-            { icon: <FaFileAlt className="text-orange-600 text-3xl mr-4" />, label: 'Summary', field: 'summary', type: 'textarea' },
+            { icon: <FaFileAlt className="text-orange-600 text-3xl mr-4" />, label: 'Role', field: 'role'},
             { icon: <FaUserGraduate className="text-orange-600 text-3xl mr-4" />, label: 'Qualification', field: 'qualification' },
             { icon: <FaTools className="text-orange-600 text-3xl mr-4" />, label: 'Skills', field: 'skills' },
             { icon: <FaProjectDiagram className="text-orange-600 text-3xl mr-4" />, label: 'Projects', field: 'projects' },
@@ -92,15 +92,7 @@ const ResumeAnalysis: React.FC<ResumeAnalysisProps> = ({ onFindJobs }) => {
               {item.icon}
               <div className="flex-1 text-left">
                 <h3 className="font-semibold text-gray-700 mb-3">{item.label}</h3>
-                {item.type === 'textarea' ? (
-                  <textarea
-                    value={data[item.field as keyof typeof data]}
-                    onChange={(e) => handleChange(item.field, e.target.value)}
-                    rows={2}
-                    className="w-full text-gray-700 bg-white text-sm rounded-lg p-3 focus:outline-orange-400 border border-gray-400"
-                  />
-                ) : (
-                  <input
+                <input
                     type="text"
                     value={
                           Array.isArray(data[item.field as keyof typeof data])
@@ -110,7 +102,6 @@ const ResumeAnalysis: React.FC<ResumeAnalysisProps> = ({ onFindJobs }) => {
                     onChange={(e) => handleChange(item.field, e.target.value)}
                     className="w-full text-gray-700 bg-white text-sm rounded-lg p-3 focus:outline-orange-400 border border-gray-400"
                   />
-                )}
               </div>
             </motion.div>
           ))}

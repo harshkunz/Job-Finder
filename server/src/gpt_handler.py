@@ -1,52 +1,57 @@
 import fitz 
 import os
 from dotenv import load_dotenv
-from openai import OpenAI
+import requests
 
 load_dotenv()
 
-# Load OpenAI API key from .env
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-client = OpenAI(api_key=OPENAI_API_KEY)
+# API KEY
+HF_API_KEY = os.getenv("HF_API_KEY")
+
+# Chat API URL
+HF_API_URL = "https://router.huggingface.co/v1/chat/completions"
 
 
-def extract_text_from_pdf(uploaded_file):
+def extract_text_from_pdf(file_bytes):
     """
     Extracts text from a PDF file.
-    
+
     Args:
-        uploaded_file (str): The path to the PDF file.
-        
+        file_bytes (bytes): The PDF file content as bytes.
+
     Returns:
         str: The extracted text.
     """
-    doc = fitz.open(stream=uploaded_file.read(), filetype="pdf")
+    doc = fitz.open(stream=file_bytes, filetype="pdf")
     text = ""
     for page in doc:
         text += page.get_text()
     return text
 
 
-def ask_openai(prompt, max_tokens=500, model="gpt-3.5-turbo"):
+def ask_huggingface(prompt, model="Qwen/Qwen3-Coder-30B-A3B-Instruct:nebius", max_tokens=500):
     """
-    Sends a prompt to the OpenAI API and returns the response.
-    
-    Args:
-        prompt (str): The prompt to send to the OpenAI API.
-        max_tokens (int): Maximum tokens for response.
-        model (str): OpenAI model to use (default: gpt-3.5-turbo)
-        
-    Returns:
-        str: The response from OpenAI.
+    Sends a prompt to Hugging Face Chat API and returns the response.
     """
+    headers = {"Authorization": f"Bearer {HF_API_KEY}"}
+    payload = {
+        "model": model,
+        "messages": [
+            {"role": "user", "content": prompt}
+        ],
+        "max_new_tokens": max_tokens
+    }
+
     try:
-        response = client.chat.completions.create(
-            model=model,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.5,
-            max_tokens=max_tokens
-        )
-        return response.choices[0].message.content
+        response = requests.post(HF_API_URL, headers=headers, json=payload)
+        response.raise_for_status()
+        data = response.json()
+        
+        # Extract chat response
+        if "choices" in data and len(data["choices"]) > 0:
+            return data["choices"][0]["message"]["content"]
+        else:
+            return str(data)
     except Exception as e:
-        print(f"Error calling OpenAI API: {e}")
+        print(f"Error calling Hugging Face API: {e}")
         return None

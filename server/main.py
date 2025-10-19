@@ -1,12 +1,8 @@
-# main.py
 import uvicorn
-from fastapi import FastAPI, UploadFile, File, Form
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-# Import your backend functions
-from src.job_finder import fetch_linkedin_jobs, fetch_naukri_jobs
-from src.gpt_handler import ask_openai, extract_text_from_pdf
 from src.routes.route import router as job_router
+
 
 app = FastAPI(
     title="Job Finder API",
@@ -14,9 +10,10 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# ----------------- CORS Setup -----------------
+
+# ----------------- CORS -----------------
 origins = [
-    "http://localhost:3000",  # frontend URL
+    "http://localhost:3000",
     "http://127.0.0.1:3000"
 ]
 app.add_middleware(
@@ -27,36 +24,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ----------------- Direct Job Routes -----------------
-@app.post("/api/jobs/linkedin")
-async def linkedin_jobs(search_query: str = Form(...), location: str = Form("india")):
-    jobs = fetch_linkedin_jobs(search_query, location)
-    return {"jobs": jobs}
 
-@app.post("/api/jobs/naukri")
-async def naukri_jobs(search_query: str = Form(...), location: str = Form("india")):
-    jobs = fetch_naukri_jobs(search_query, location)
-    return {"jobs": jobs}
+app.include_router(job_router, prefix="/api", tags=[""])
 
-# ----------------- Resume Routes -----------------
-@app.post("/api/resume/analyze")
-async def analyze_resume(prompt: str = Form(...), max_tokens: int = Form(500)):
-    summary = ask_openai(prompt, max_tokens)
-    return {"summary": summary}
-
-# ----------------- Test Upload Endpoint -----------------
-@app.post("/api/test/upload")
-async def test_upload(file: UploadFile = File(...)):
-    content = await file.read()
-    return {"filename": file.filename, "size": len(content)}
-
-# ----------------- Include Router Endpoints -----------------
-app.include_router(job_router, prefix="/api", tags=["Job Routes"])
 
 # ----------------- Root -----------------
 @app.get("/")
 def root():
-    return {"message": "Job Finder API is running "}
+    return {"message": "Server is running "}
+
 
 # ----------------- Run -----------------
 if __name__ == "__main__":
