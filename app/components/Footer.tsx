@@ -13,7 +13,7 @@ const Footer = () => {
           <h2 className="text-2xl font-semibold mb-3">Contact Us</h2>
           <p className="flex items-center gap-3 transition-colors cursor-pointer transition-transform transform hover:scale-105">
             <MdEmail size={22} />
-            <a className='text-sm' href="mailto:support@openai.com">support@openAIxyz.com</a>
+            <a className='text-sm' href="mailto:support@openai.com">support@openAsk.com</a>
           </p>
           <p className="flex items-center gap-3 transition-colors cursor-pointer transition-transform transform hover:scale-105">
             <MdPhone size={22} />

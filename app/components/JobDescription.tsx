@@ -31,7 +31,10 @@ const ResumeAnalysis: React.FC<ResumeAnalysisProps> = ({ onFindJobs }) => {
     console.log("Finding jobs for:", data);
   };
 
-  const cardVariants = {
+  const cardVariants: {
+    hidden: { opacity: number; y: number };
+    visible: (i: number) => { opacity: number; y: number; transition: object };
+  } = {
     hidden: { opacity: 0, y: 40 },
     visible: (i: number) => ({
       opacity: 1,
@@ -91,7 +94,7 @@ const ResumeAnalysis: React.FC<ResumeAnalysisProps> = ({ onFindJobs }) => {
                 <h3 className="font-semibold text-gray-700 mb-3">{item.label}</h3>
                 {item.type === 'textarea' ? (
                   <textarea
-                    value={data[item.field]}
+                    value={data[item.field as keyof typeof data]}
                     onChange={(e) => handleChange(item.field, e.target.value)}
                     rows={2}
                     className="w-full text-gray-700 bg-white text-sm rounded-lg p-3 focus:outline-orange-400 border border-gray-400"
@@ -100,10 +103,10 @@ const ResumeAnalysis: React.FC<ResumeAnalysisProps> = ({ onFindJobs }) => {
                   <input
                     type="text"
                     value={
-                      Array.isArray(data[item.field])
-                        ? data[item.field].join(', ')
-                        : data[item.field]
-                    }
+                          Array.isArray(data[item.field as keyof typeof data])
+                            ? (data[item.field as keyof typeof data] as string[]).join(', ')
+                            : data[item.field as keyof typeof data]
+                          }
                     onChange={(e) => handleChange(item.field, e.target.value)}
                     className="w-full text-gray-700 bg-white text-sm rounded-lg p-3 focus:outline-orange-400 border border-gray-400"
                   />

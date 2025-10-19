@@ -5,7 +5,7 @@ import Features from "./components/Features";
 import Footer from './components/Footer';
 import ResumeAnalysis from './components/JobDescription';
 import JobFinder from './components/JobFinder';
-import { IoCloseCircleOutline } from "react-icons/io5";
+import { IoClose } from "react-icons/io5";
 
 export default function Home() {
   const [showJobs, setShowJobs] = useState(false);
@@ -28,21 +28,18 @@ export default function Home() {
           <button
             onClick={() => setShowJobs(false)}
             className="
-              absolute 
-              bottom-3 right-center
-              text-white 
-              bg-black/50 
-              hover:bg-orange-500 
-              p-1 
-              rounded-full 
-              z-50 
-              transition 
-              duration-200 
-              shadow-lg
-              flex items-center justify-center
+              absolute bottom-2.5 right-center
+              flex items-center gap-2
+              px-4 py-2
+              bg-black/60 text-white
+              rounded-full
+              hover:shadow-[0_0_20px_4px_white]
+              hover:bg-white hover:text-black
+              transition duration-300
             "
           >
-            <IoCloseCircleOutline size={32} />
+            <IoClose size={22} />
+            Close
           </button>
 
           {/* Popup Box taking full JobFinder control */}
