@@ -23,6 +23,7 @@ def fetch_linkedin_jobs(search_query, location="india", max_jobs=30):
         run = client.actor("BHzefUZlZRKWxkTck").call(run_input=run_input)
         jobs_raw = list(client.dataset(run["defaultDatasetId"]).iterate_items())
         
+        
         jobs = []
 
         for idx, j in enumerate(jobs_raw, start=1):
@@ -38,9 +39,9 @@ def fetch_linkedin_jobs(search_query, location="india", max_jobs=30):
                 "location": j.get("location", "N/A"),
                 "type": j.get("type", "Full-time"),
                 "skills": j.get("skills", []),
-                "salary": j.get("salary", salary_str),
-                "posted": j.get("posted", datetime.today().strftime("%Y-%m-%d")),
-                "logo": j.get("logo", "/globe.svg"),
+                "salary": j.get("salary") or salary_str,
+                "posted": datetime.today().strftime("%Y-%m-%d"),
+                "logo": "/logo.web",
                 "url": j.get("url", "#"),
                 "source": "LinkedIn"
             }
