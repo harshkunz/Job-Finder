@@ -1,5 +1,5 @@
 from fastapi import APIRouter, UploadFile, File, Form
-from src.gpt_handler import extract_text_from_pdf, ask_huggingface
+from src.gpt_handler import extract_text_from_pdf, ask_huggingface, extract_resume_via_gpt
 from src.utils.response import success_response, error_response
 from src.job_finder import fetch_linkedin_jobs, fetch_naukri_jobs
 
@@ -10,10 +10,16 @@ async def upload_resume(file: UploadFile = File(...)):
     try:
         file_bytes = await file.read()
         text = extract_text_from_pdf(file_bytes)
-        parsed_data = ask_huggingface(f"Extract skills, experience, education, and contact info from this resume:\n{text}")
-        print("Response from Hugging Face:")
+        parsed_data = extract_resume_via_gpt(text)
+
+        print("Response from Hugging Face (parsed JSON):")
         print(parsed_data)
+
+        if not parsed_data:
+            return error_response(message="Failed to parse resume via GPT")
+        
         return success_response(data=parsed_data, message="Resume parsed successfully")
+
     except Exception as e:
         return error_response(message=f"Resume parsing failed: {e}")
 

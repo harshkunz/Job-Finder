@@ -8,25 +8,57 @@ import JobFinder from './components/JobFinder';
 import { IoClose } from "react-icons/io5";
 
 export default function Home() {
+  const [jobs, setJobs] = useState<any[]>([]);
+  const [resumeData, setResumeData] = useState<any>(null);
+  const [resumeFileName, setResumeFileName] = useState<string>("");
+
+  const [loading, setLoading] = useState(false);
   const [showJobs, setShowJobs] = useState(false);
 
-  const handleFindJobs = () => {
+  const handleFindJobs = (fetchedJobs: any[]) => {
+    setJobs(fetchedJobs);
     setShowJobs(true);
+    setLoading(false);
+  };
+
+  const handleStartLoading = () => setLoading(true);
+
+  const handleCloseJobs = () => {
+    setShowJobs(false);
+    setJobs([]);
   };
 
   return (
     <main className="relative">
-      <ResumeUpload />
-      <ResumeAnalysis onFindJobs={handleFindJobs} />
+      <ResumeUpload
+        onStartLoading={handleStartLoading}
+        onStopLoading={() => setLoading(false)}
+        onAnalysis={(data) => setResumeData(data)}
+        onFileNameChange={(name) => setResumeFileName(name)}
+      />
+
+      <ResumeAnalysis
+        resumeData={resumeData}
+        fileName={resumeFileName}
+        onFindJobs={(fetchedJobs) => {
+          handleFindJobs(fetchedJobs);
+        }}
+        onStartLoading={handleStartLoading}
+      />
       <Features />
       <Footer />
 
-      {/* JobFinder Popup */}
+      {/* Show loading overlay globally */}
+      {loading && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50">
+          <div className="w-24 h-24 border-8 border-white border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      )}
+
       {showJobs && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          {/* Close button inside overlay */}
           <button
-            onClick={() => setShowJobs(false)}
+            onClick={handleCloseJobs}
             className="
               absolute bottom-2.5 right-center
               flex items-center gap-2
@@ -42,9 +74,8 @@ export default function Home() {
             Close
           </button>
 
-          {/* Popup Box taking full JobFinder control */}
           <div className="relative w-full max-w-5xl h-[85vh] bg-white rounded-4xl shadow-2xl overflow-hidden">
-            <JobFinder onClose={() => setShowJobs(false)} />
+            <JobFinder jobs={jobs} loading={loading} />
           </div>
         </div>
       )}
