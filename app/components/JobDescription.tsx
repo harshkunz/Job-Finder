@@ -1,21 +1,35 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaUserGraduate, FaMapMarkerAlt, FaTools, FaProjectDiagram, FaFileAlt } from 'react-icons/fa';
 
+
 interface ResumeAnalysisProps {
-  onFindJobs: () => void;
+  resumeData?: any;
+  fileName?: string;
+  onFindJobs: (jobs: any[]) => void;
+  onStartLoading: () => void;
 }
 
-const ResumeAnalysis: React.FC<ResumeAnalysisProps> = ({ onFindJobs }) => {
-  const initialData = {
-    role: "***",
-    qualification: "***",
-    skills: ['***',],
-    projects: ['***',]
-  };
+const ResumeAnalysis: React.FC<ResumeAnalysisProps> = ({ resumeData, fileName, onFindJobs, onStartLoading,}) => {
+  const [data, setData] = useState({
+    role: '',
+    qualification: '',
+    skills: [],
+    projects: [],
+  });
 
-  const [data, setData] = useState(initialData);
+  useEffect(() => {
+    if (resumeData) {
+      setData({
+        role: resumeData.role || '',
+        qualification: resumeData.qualification || '',
+        skills: resumeData.skills?.slice(0, 7) || [],
+        projects: resumeData.projects?.slice(0, 3) || [],
+    });
+    }
+  }, [resumeData]);
+
 
   const handleChange = (field: string, value: string) => {
     setData((prev) => ({
@@ -27,10 +41,7 @@ const ResumeAnalysis: React.FC<ResumeAnalysisProps> = ({ onFindJobs }) => {
     }));
   };
 
-  const handleFindJobs = () => {
-    console.log("Finding jobs for:", data);
-  };
-
+  
   const cardVariants: {
     hidden: { opacity: number; y: number };
     visible: (i: number) => { opacity: number; y: number; transition: object };
@@ -42,6 +53,29 @@ const ResumeAnalysis: React.FC<ResumeAnalysisProps> = ({ onFindJobs }) => {
       transition: { delay: i * 0.15, type: "spring", stiffness: 70 },
     }),
   };
+
+  
+  const handleFindJobs = async () => {
+    onStartLoading();
+    const formData = new FormData();
+    formData.append("search_query", data.role);
+    formData.append("location", "india");
+    formData.append("max_jobs", "30");
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/search/linkedin", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+      onFindJobs(result.data || []);
+    } catch (err) {
+      console.error("LinkedIn API error:", err);
+      onFindJobs([]);
+    }
+  };
+
 
   return (
     <motion.div
@@ -55,7 +89,7 @@ const ResumeAnalysis: React.FC<ResumeAnalysisProps> = ({ onFindJobs }) => {
         initial={{ scale: 0.97, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="border border-gray-300 mb-2 rounded-3xl shadow-md px-10 py-10 bg-white hover:shadow-2xl hover:translate-y-1 transition-all duration-300"
+        className="border border-gray-300 mb-2 rounded-3xl shadow-md px-10 py-8 bg-white hover:shadow-2xl hover:translate-y-1 transition-all duration-300"
       >
         {/* Title */}
         <motion.div
@@ -64,7 +98,7 @@ const ResumeAnalysis: React.FC<ResumeAnalysisProps> = ({ onFindJobs }) => {
           transition={{ duration: 0.6 }}
           className="text-center mb-10"
         >
-          <h2 className="text-3xl sm:text-3xl font-semibold text-gray-800 mb-2">
+          <h2 id='job-analysis' className="text-3xl sm:text-3xl font-semibold text-gray-800 mb-2">
             Dynamic Resume Insights
           </h2>
           <p className="text-gray-500 text-sm sm:text-base">
@@ -87,7 +121,7 @@ const ResumeAnalysis: React.FC<ResumeAnalysisProps> = ({ onFindJobs }) => {
               initial="hidden"
               animate="visible"
               whileHover={{ scale: 1.02 }}
-              className="flex items-start p-5 rounded-2xl border border-gray-300 shadow-md hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-orange-50 via-white to-orange-50"
+              className="flex items-start p-4 rounded-2xl border border-gray-300 shadow-md hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-orange-50 via-white to-orange-50"
             >
               {item.icon}
               <div className="flex-1 text-left">
@@ -100,7 +134,7 @@ const ResumeAnalysis: React.FC<ResumeAnalysisProps> = ({ onFindJobs }) => {
                             : data[item.field as keyof typeof data]
                           }
                     onChange={(e) => handleChange(item.field, e.target.value)}
-                    className="w-full text-gray-700 bg-white text-sm rounded-lg p-3 focus:outline-orange-400 border border-gray-400"
+                    className="w-full text-gray-700 bg-white text-sm rounded-xl p-3 focus:outline-orange-400 border border-gray-400"
                   />
               </div>
             </motion.div>
@@ -115,7 +149,7 @@ const ResumeAnalysis: React.FC<ResumeAnalysisProps> = ({ onFindJobs }) => {
           className="text-center mt-10"
         >
           <motion.button
-            onClick={onFindJobs}
+            onClick={handleFindJobs}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
             className="bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white font-semibold py-3 px-10 rounded-full shadow-lg transition-all duration-300"

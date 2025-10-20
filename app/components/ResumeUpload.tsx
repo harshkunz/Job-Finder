@@ -1,11 +1,59 @@
 'use client';
-import React from "react";
+import React, { useRef, useState } from "react";
 
-const ResumeUpload = () => {
+interface ResumeUploadProps {
+  onAnalysis?: (data: any) => void;
+  onStartLoading?: () => void;
+  onStopLoading?: () => void;
+  onFileNameChange?: (name: string) => void;
+}
+
+const ResumeUpload: React.FC<ResumeUploadProps> = ({ onAnalysis, onStartLoading, onStopLoading, onFileNameChange }) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [result, setResult] = useState<any>(null);
+  const [fileName, setFileName] = useState<string>("");
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setFileName(file.name);
+    if (onFileNameChange) onFileNameChange(file.name);
+    if (onStartLoading) onStartLoading();
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch('http://127.0.0.1:8000/api/upload', {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+
+      setResult(data.data);
+      if (onAnalysis) onAnalysis(data.data);
+
+    } catch (err) {
+      alert("Failed to upload or analyze resume.");
+    } finally {
+      if (onStopLoading) onStopLoading();
+    }
+  };
+
+  const handleGo = () => {
+    const el = document.getElementById('job-analysis');
+    if (el) {
+      const yOffset = -80;
+      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
   return (
-    <div className="max-w-6xl mx-auto mt-16 px-6">
+    <div className="max-w-6xl mx-auto mt-15 px-6">
       {/* Intro Title and Description */}
-      <div className="text-center mb-13 pt-1">
+      <div className="text-center mb-11 pt-1">
         <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
           Unlock Your Next Career Move
         </h1>
@@ -21,7 +69,7 @@ const ResumeUpload = () => {
         <h2 className="text-3xl sm:text-3xl font-semibold text-gray-800">
           Upload Your Resume
         </h2>
-        <p className="text-gray-500 mt-2 mb-12 text-sm sm:text-base">
+        <p className="text-gray-500 mt-2 mb-11 text-sm sm:text-base">
           Click to Choose Your File
         </p>
 
@@ -56,9 +104,46 @@ const ResumeUpload = () => {
         </div>
 
         {/* Upload Button */}
-        <button className="mt-12 sm:mt-16 bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white font-semibold py-3 px-10 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
-          Upload
+        <input
+          type="file"
+          accept="application/pdf"
+          ref={fileInputRef}
+          style={{ display: "none" }}
+          onChange={handleFileChange}
+        />
+
+        <button
+          className={`mt-11 sm:mt-15 font-semibold py-3 px-10 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 
+            ${result
+              ? "bg-gradient-to-r from-orange-400 to-orange-600 hover:from-green-500 hover:to-green-700 text-white"
+              : "bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white"
+            }`}
+          onClick={() => {
+            if (fileInputRef.current) {
+              fileInputRef.current.value = ""; 
+              fileInputRef.current.click();
+            }
+          }}
+        >
+          {result ? "ReUpload" : "Upload"}
         </button>
+
+        {result && (
+          <button
+            className="mt-12 sm:mt-16 bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white font-semibold py-3 px-10 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300"
+            onClick={handleGo}
+          >
+            GoData
+          </button>
+        )}
+
+        {result && (
+          <p className="mt-4 text-gray-600 text-sm italic text-center">
+            Uploaded file:&nbsp;
+            <span className="font-semibold text-gray-800">{fileName}</span>
+          </p>
+        )}
+
       </div>
     </div>
   );
