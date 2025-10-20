@@ -25,13 +25,13 @@ const Footer = () => {
         <div className="flex flex-col items-start md:items-end space-y-2">
           <h2 className="text-2xl font-semibold mb-3">Follow Us</h2>
           <div className="flex gap-5 text-2xl mt-2">
-            <Link href="https://twitter.com/openai" target="_blank">
+            <Link href="https://twitter.com/" target="_blank">
               <FaTwitter size={28} className=" transition-transform transform hover:scale-110" />
             </Link>
-            <Link href="https://linkedin.com/company/openai" target="_blank">
+            <Link href="https://docker.com/" target="_blank">
               <FaDocker size={30} className="transition-transform transform hover:scale-110" />
             </Link>
-            <Link href="https://github.com/openai" target="_blank">
+            <Link href="https://github.com/harshkunz/Job-Finder" target="_blank">
               <FaGithub size={28} className=" transition-transform transform hover:scale-110" />
             </Link>
           </div>

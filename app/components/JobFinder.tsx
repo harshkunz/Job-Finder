@@ -1,4 +1,5 @@
 'use client';
+import { useEffect } from "react";
 import React from 'react';
 
 interface Job {
@@ -17,9 +18,10 @@ interface Job {
 interface JobFinderProps {
   jobs: Job[];
   loading: boolean;
+  resumeData?: any;
 }
 
-const JobFinder: React.FC<JobFinderProps> = ({ jobs }) => {
+const JobFinder: React.FC<JobFinderProps> = ({ jobs, resumeData }) => {
   
   return (
     <section className="h-[85vh] w-full mx-auto overflow-y-auto bg-white rounded-4xl shadow-lg hide-scrollbar relative">
@@ -64,7 +66,7 @@ const JobFinder: React.FC<JobFinderProps> = ({ jobs }) => {
               <div className="flex flex-col md:items-end mt-4 md:mt-0 gap-2">
                 <p className="text-gray-500 text-sm">{job.location} | {job.type}</p>
                 <div className="flex flex-wrap gap-2 mt-2">
-                  {job.skills.map((skill, idx) => (
+                  {resumeData?.skills?.slice(0, 3).map((skill: string, idx: number) => (
                     <span
                       key={idx}
                       className="bg-orange-100 text-orange-800 text-xs font-medium px-2 py-1 rounded-full"

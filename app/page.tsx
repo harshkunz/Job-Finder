@@ -75,7 +75,11 @@ export default function Home() {
           </button>
 
           <div className="relative w-full max-w-5xl h-[85vh] bg-white rounded-4xl shadow-2xl overflow-hidden">
-            <JobFinder jobs={jobs} loading={loading} />
+            <JobFinder
+              resumeData={resumeData}
+              jobs={jobs}
+              loading={loading} 
+            />
           </div>
         </div>
       )}
