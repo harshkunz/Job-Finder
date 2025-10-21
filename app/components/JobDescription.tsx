@@ -63,7 +63,7 @@ const ResumeAnalysis: React.FC<ResumeAnalysisProps> = ({ resumeData, fileName, o
     formData.append("max_jobs", "30");
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/upload`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/search/linkedin`, {
         method: "POST",
         body: formData,
       });
