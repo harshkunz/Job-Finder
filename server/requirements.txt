@@ -4,3 +4,4 @@ python-dotenv
 requests
 PyMuPDF
 apify-client
+python-multipart
