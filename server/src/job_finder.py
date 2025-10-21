@@ -23,9 +23,8 @@ def fetch_linkedin_jobs(search_query, location="india", max_jobs=30):
         run = client.actor("BHzefUZlZRKWxkTck").call(run_input=run_input)
         jobs_raw = list(client.dataset(run["defaultDatasetId"]).iterate_items())
         
-        
         jobs = []
-
+        
         for idx, j in enumerate(jobs_raw, start=1):
 
             min_salary = random.randint(40000, 100000)
@@ -35,14 +34,18 @@ def fetch_linkedin_jobs(search_query, location="india", max_jobs=30):
             job = {
                 "id": idx,
                 "title": j.get("title", "N/A"),
-                "company": j.get("company", "N/A"),
+                "company": j.get("companyName", "N/A"),
                 "location": j.get("location", "N/A"),
-                "type": j.get("type", "Full-time"),
+                "type": j.get("contractType", "Full-time"),
                 "skills": j.get("skills", []),
                 "salary": j.get("salary") or salary_str,
-                "posted": datetime.today().strftime("%Y-%m-%d"),
-                "logo": "/logo.web",
-                "url": j.get("url", "#"),
+                "posted": j.get("postedTime") or datetime.today().strftime("%Y-%m-%d"),
+                "logo": "/logo.webp",
+                "count": j.get("applicationsCount", "N/A"),
+                "companyId": j.get("companyId", "N/A"),
+                "experience": j.get("experienceLevel", "N/A"),
+                "jobUrl": j.get("jobUrl") or "#",
+                "applyUrl": j.get("applyUrl") or "#",
                 "source": "LinkedIn"
             }
             jobs.append(job)

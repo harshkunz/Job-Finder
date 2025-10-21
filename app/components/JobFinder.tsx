@@ -12,6 +12,11 @@ interface Job {
   salary?: string;
   posted: string;
   logo?: string;
+  count?: string;       
+  companyId?: string;   
+  experience?: string;  
+  jobUrl?: string;
+  applyUrl?: string;      
   source: string;
 }
 
@@ -22,6 +27,8 @@ interface JobFinderProps {
 }
 
 const JobFinder: React.FC<JobFinderProps> = ({ jobs, resumeData }) => {
+
+
   
   return (
     <section className="h-[85vh] w-full mx-auto overflow-y-auto bg-white rounded-4xl shadow-lg hide-scrollbar relative">
@@ -50,20 +57,32 @@ const JobFinder: React.FC<JobFinderProps> = ({ jobs, resumeData }) => {
                   <img
                     src={job.logo}
                     alt={job.company}
-                    className="w-16 h-16 object-contain rounded-full border border-gray-300"
+                    className="w-15 h-15 object-contain rounded-full border border-gray-300 mb-14 -ml-1 mr-1"
                   />
                 )}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-700">{job.title}</h3>
-                  <p className="text-gray-600 text-sm font-semibold mb-1">{job.source}</p>
+                  <h3 className="text-lg font-semibold text-gray-700 -mt-2">{job.title}</h3>
+                  <p className="text-gray-600 text-sm font-semibold mb-1">{job.company}</p>
+                  <p className="text-gray-500 text-sm font-semibold mb-1">Company Id : {job.companyId}</p>
                   <p className="text-gray-400 text-sm mb-1">{job.posted}</p>
-                  <button className="mt-2 bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white font-semibold text-sm py-1.5 px-5 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
+            
+                  <button
+                    onClick={() => window.open(job.applyUrl, "_blank")}
+                    className="mt-2 bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white font-semibold text-sm py-1.5 px-5 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
                     Apply
                   </button>
+                  <button 
+                    onClick={() => window.open(job.jobUrl, "_blank")}
+                    className="mt-2 ml-2 bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white font-semibold text-sm py-1.5 px-5 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
+                    Job
+                  </button>
+
+                  <p className="text-green-700 text-sm font-semibold mt-2 ml-2">Source: {job.source}</p>
                 </div>
               </div>
 
-              <div className="flex flex-col md:items-end mt-4 md:mt-0 gap-2">
+              <div className="flex flex-col md:items-end mt-2 md:mt-0 gap-2">
+                <p className="text-orange-700 text-sm font-semibold">{job.count}</p>
                 <p className="text-gray-500 text-sm">{job.location} | {job.type}</p>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {resumeData?.skills?.slice(0, 3).map((skill: string, idx: number) => (
@@ -75,8 +94,9 @@ const JobFinder: React.FC<JobFinderProps> = ({ jobs, resumeData }) => {
                     </span>
                   ))}
                 </div>
+                <p className="text-gray-500 text-sm font-semibold mt-1">Level : {job.experience}</p>
                 {job.salary && (
-                  <p className="text-green-600 font-semibold mt-2">{job.salary}</p>
+                  <p className="text-green-600 font-semibold mt-1">{job.salary}</p>
                 )}
               </div>
             </div>
