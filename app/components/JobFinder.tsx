@@ -27,8 +27,6 @@ interface JobFinderProps {
 }
 
 const JobFinder: React.FC<JobFinderProps> = ({ jobs, resumeData }) => {
-
-
   
   return (
     <section className="h-[85vh] w-full mx-auto overflow-y-auto bg-white rounded-4xl shadow-lg hide-scrollbar relative">

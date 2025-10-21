@@ -1,8 +1,12 @@
+import os
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.routes.route import router as job_router
+from dotenv import load_dotenv
 
+
+load_dotenv()
 
 app = FastAPI(
     title="Job Finder API",
@@ -10,12 +14,12 @@ app = FastAPI(
     version="1.0.0"
 )
 
-
-# ----------------- CORS -----------------
 origins = [
     "http://localhost:3000",
-    "http://127.0.0.1:3000"
+    "http://127.0.0.1:3000",
+    os.getenv("FRONTEND_URL", "*")
 ]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -25,15 +29,14 @@ app.add_middleware(
 )
 
 
-app.include_router(job_router, prefix="/api", tags=[""])
+app.include_router(job_router, prefix="/api", tags=["Jobs"])
 
 
-# ----------------- Root -----------------
 @app.get("/")
 def root():
-    return {"message": "Server is running "}
+    return {"message": "Server is running!"}
 
 
-# ----------------- Run -----------------
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
