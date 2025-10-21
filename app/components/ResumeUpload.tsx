@@ -25,7 +25,7 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({ onAnalysis, onStartLoading,
     formData.append("file", file);
 
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/upload', {
+      const res = await fetch(`${process.env.BACKEND_URL}/api/upload`, {
         method: "POST",
         body: formData,
       });
