@@ -31,7 +31,7 @@ const Footer = () => {
             <Link href="https://docker.com/" target="_blank">
               <FaDocker size={30} className="transition-transform transform hover:scale-110" />
             </Link>
-            <Link href="https://github.com/harshkunz/Job-Finder" target="_blank">
+            <Link href="https://github.com/harshkunz" target="_blank">
               <FaGithub size={28} className=" transition-transform transform hover:scale-110" />
             </Link>
           </div>
