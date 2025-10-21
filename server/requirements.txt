@@ -1,8 +1,6 @@
-# dependencies
-
-uvicorn
 fastapi
-pymupdf
-apify-client
+uvicorn
 python-dotenv
 requests
+PyMuPDF
+apify-client
