@@ -82,32 +82,32 @@ const ResumeAnalysis: React.FC<ResumeAnalysisProps> = ({ resumeData, fileName, o
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className="max-w-6xl mx-auto mt-16 px-6"
+      className="max-w-6xl mx-auto mt-10 sm:mt-16 px-6"
     >
       {/* Outer Container */}
       <motion.div
         initial={{ scale: 0.97, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="border border-gray-300 mb-2 rounded-3xl shadow-md px-10 py-8 bg-white hover:shadow-2xl hover:translate-y-1 transition-all duration-300"
+        className="border border-gray-300 mb-2 rounded-3xl shadow-md px-4 py-8 sm:px-10 sm:py-8 bg-white hover:shadow-2xl hover:translate-y-1 transition-all duration-300"
       >
         {/* Title */}
         <motion.div
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-10"
+          className="text-center mb-8 sm:mb-10"
         >
-          <h2 id='job-analysis' className="text-3xl sm:text-3xl font-semibold text-gray-800 mb-2">
+          <h2 id='job-analysis' className="text-2xl sm:text-3xl font-semibold text-gray-800 mb-2 sm:px-0 px-2">
             Dynamic Resume Insights
           </h2>
-          <p className="text-gray-500 text-sm sm:text-base">
+          <p className="text-gray-500 text-xs sm:text-base sm:px-0 px-6">
             Instant AI analysis, editable to match your career vision ✏️
           </p>
         </motion.div>
 
         {/* Resume Cards */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4 sm:gap-6">
           {[
             { icon: <FaFileAlt className="text-orange-600 text-3xl mr-4" />, label: 'Role', field: 'role'},
             { icon: <FaUserGraduate className="text-orange-600 text-3xl mr-4" />, label: 'Qualification', field: 'qualification' },
@@ -125,7 +125,7 @@ const ResumeAnalysis: React.FC<ResumeAnalysisProps> = ({ resumeData, fileName, o
             >
               {item.icon}
               <div className="flex-1 text-left">
-                <h3 className="font-semibold text-gray-700 mb-3">{item.label}</h3>
+                <h3 className="font-semibold text-gray-700 mb-2 sm:mb-3">{item.label}</h3>
                 <input
                     type="text"
                     value={
@@ -146,7 +146,7 @@ const ResumeAnalysis: React.FC<ResumeAnalysisProps> = ({ resumeData, fileName, o
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-center mt-10"
+          className="text-center mt-8 sm:mt-10"
         >
           <motion.button
             onClick={handleFindJobs}
