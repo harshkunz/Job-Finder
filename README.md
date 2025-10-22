@@ -104,5 +104,3 @@ Open to contributions!
 - Commit your changes (`git commit -m 'Add feature'`)  
 - Push to the branch (`git push origin feature-name`)  
 - Create a Pull Request
-
-
