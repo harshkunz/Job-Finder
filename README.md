@@ -6,6 +6,13 @@
 - **Backend**: Python 3.11+, FastAPI, Hugging Face (LLMs), Apify
 - **Tools/Version**: Git, MCP
 
+### ☐ Project Workflow
+- User uploads resume via UI, server extracts text by using **Fitz_Library**.  
+- Backend uses a **LLM (Qwen/Qwen3)** to extract key information from the resume.  
+- Job data is scraped from LinkedIn & Naukri using **Apify**.  
+- Backend returns JSON with resume insights and matched jobs.  
+- Displays results in `JobFinder` with responsive UI and Apply links.
+
 ### ☐ Project Structure
 ``` Java
 Job-Finder/
@@ -18,9 +25,7 @@ Job-Finder/
 │   │   └── ...ts
 │   ├── layout.tsx
 │   └── page.tsx
-│
 ├── Public/                      
-│
 ├── server/                     
 │   ├── src/
 │   │   ├── routes/
@@ -33,19 +38,11 @@ Job-Finder/
 │   │   └── job_finder.py
 │   ├── main.py
 │   └── requirements.txt
-│
 ├── .gitignore
 ├── package.json
 ├── next.config.js
 └── tailwind.config.js
 ```
-
-### ☐ Project Workflow
-- User uploads resume via UI, server extracts text by using **Fitz_Library**.  
-- Backend uses a **LLM (Qwen/Qwen3)** to extract key information from the resume.  
-- Job data is scraped from LinkedIn & Naukri using **Apify**.  
-- Backend returns JSON with resume insights and matched jobs.  
-- Displays results in `JobFinder` with responsive UI and Apply links.
 
 ### ☐ Installation
 #### Clone the repository
