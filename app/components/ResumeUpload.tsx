@@ -51,13 +51,13 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({ onAnalysis, onStartLoading,
   };
 
   return (
-    <div className="max-w-6xl mx-auto mt-15 px-6">
+    <div className="max-w-6xl mx-auto mt-10 sm:mt-15 px-6">
       {/* Intro Title and Description */}
-      <div className="text-center mb-11 pt-1">
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
+      <div className="text-center mb-8 sm:mb-11 pt-1">
+        <h1 className="text-2xl sm:text-4xl font-bold text-gray-800 mb-4">
           Unlock Your Next Career Move
         </h1>
-        <p className="text-gray-600 text-base sm:text-lg">
+        <p className="text-gray-600 text-xs sm:text-lg sm:px-0 px-2">
           Our AI analyzes your skills, experience, and career trajectory to deliver highly relevant job opportunities.
           <br />
           Access curated roles on LinkedIn, Foundit, and Naukri to advance your career strategically
@@ -65,21 +65,21 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({ onAnalysis, onStartLoading,
       </div>
 
       {/* Upload Resume Section */}
-      <div className="bg-white rounded-2xl mb-10 shadow-md px-16 py-12 text-center border border-gray-300 hover:shadow-xl hover:translate-y-1 transition-all duration-300">
-        <h2 className="text-3xl sm:text-3xl font-semibold text-gray-800">
+      <div className="bg-white rounded-2xl mb-10 shadow-md sm:px-16 sm:py-12 px-10 py-8 text-center border border-gray-300 hover:shadow-xl hover:translate-y-1 transition-all duration-300">
+        <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800">
           Upload Your Resume
         </h2>
-        <p className="text-gray-500 mt-2 mb-11 text-sm sm:text-base">
+        <p className="text-gray-500 mt-1 mb-8 sm:mt-2 sm:mb-11 text-xs sm:text-base">
           Click to Choose Your File
         </p>
 
         {/* Steps */}
-        <div className="flex flex-col md:flex-row justify-around items-start mt-12 gap-10">
+        <div className="flex flex-col md:flex-row justify-around items-start sm:mt-12 gap-5 sm:gap-10">
           {/* Step 1 */}
           <div className="flex flex-col items-center w-full md:w-1/3">
             <h3 className="text-6xl sm:text-7xl font-bold text-gray-300">1</h3>
             <p className="font-semibold mt-3 text-gray-700 text-lg">Upload Resume</p>
-            <p className="text-gray-500 text-sm sm:text-base mt-1">
+            <p className="text-gray-500 text-xs sm:text-base mt-1">
               Upload your resume in PDF format. max_size (50 mb)
             </p>
           </div>
@@ -88,7 +88,7 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({ onAnalysis, onStartLoading,
           <div className="flex flex-col items-center w-full md:w-1/3">
             <h3 className="text-6xl sm:text-7xl font-bold text-gray-300">2</h3>
             <p className="font-semibold mt-3 text-gray-700 text-lg">AI Resume Analysis</p>
-            <p className="text-gray-500 text-sm sm:text-base mt-1">
+            <p className="text-gray-500 text-xs sm:text-base mt-1">
               AI creates a personalized resume summary.
             </p>
           </div>
@@ -97,7 +97,7 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({ onAnalysis, onStartLoading,
           <div className="flex flex-col items-center w-full md:w-1/3">
             <h3 className="text-6xl sm:text-7xl font-bold text-gray-300">3</h3>
             <p className="font-semibold mt-3 text-gray-700 text-lg">Click Job Profile</p>
-            <p className="text-gray-500 text-sm sm:text-base mt-1">
+            <p className="text-gray-500 text-xs sm:text-base mt-1">
               Go to the job portal and apply for this job.
             </p>
           </div>
@@ -113,7 +113,7 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({ onAnalysis, onStartLoading,
         />
 
         <button
-          className={`mt-11 sm:mt-15 font-semibold py-3 px-10 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 
+          className={`mt-8 sm:mt-15 font-semibold py-3 px-10 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 
             ${result
               ? "bg-gradient-to-r from-orange-400 to-orange-600 hover:from-green-500 hover:to-green-700 text-white"
               : "bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white"
@@ -130,7 +130,7 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({ onAnalysis, onStartLoading,
 
         {result && (
           <button
-            className="mt-12 sm:mt-16 bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white font-semibold py-3 px-10 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300"
+            className="mt-8 sm:mt-15 bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white font-semibold py-3 px-10 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300"
             onClick={handleGo}
           >
             GoData
@@ -138,7 +138,7 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({ onAnalysis, onStartLoading,
         )}
 
         {result && (
-          <p className="mt-4 text-gray-600 text-sm italic text-center">
+          <p className="mt-2 sm:mt-4 text-gray-600 text-sm italic text-center">
             Uploaded file:&nbsp;
             <span className="font-semibold text-gray-800">{fileName}</span>
           </p>
