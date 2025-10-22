@@ -1,8 +1,29 @@
-## Job-Finder
-GenAI-Based Job Matching Tool
+### ☐ Job Finder
+“AI-powered platform that analyzes resumes and recommends matching jobs from top portals.”
 
+<br>
 
-### Project Structure
+### ☐ Tech Stack
+___
+#### Frontend
+- **Next.js 15** – React framework for SSR & App Router  
+- **React.js** – UI library  
+- **Tailwind CSS** – Utility-first styling  
+- **TypeScript** – Type safety  
+
+#### Backend
+- **FastAPI** – Python web framework for APIs  
+- **Python 3.11+** – Core backend language  
+- **Hugging Face API** – AI model for resume analysis    
+- **Apify  / Requests** – Scrapes and gathers job postings programmatically
+
+#### Tools / Others
+- **VSCode** – IDE  
+- **npm / Node.js** – Frontend package manager  
+- **Git / GitHub** – Version control
+- **Postman / MCP** – Used for testing and debugging APIs  
+
+### ☐ Project Structure
 ``` Java
 Job-Finder/
 ├── app/                          
@@ -35,3 +56,58 @@ Job-Finder/
 ├── next.config.js
 └── tailwind.config.js
 ```
+
+### ☐ Project Workflow
+___
+- User uploads resume via UI, server extracts text by using **Fitz_Library**.  
+- Backend uses a **LLM (Qwen/Qwen3)** to extract key information from the resume.  
+- Job data is scraped from LinkedIn & Naukri using **Apify**.  
+- Backend returns JSON with resume insights and matched jobs.  
+- Displays results in `JobFinder` with responsive UI and Apply links.
+
+### ☐ Installation
+___
+#### Clone the repository
+```bash
+git clone https://github.com/harshkunz/Job-Finder.git
+cd Job-Finder
+```
+
+#### Frontend setup (Next.js)
+```bash
+cd app
+npm install       # Install Dependencies
+npm run dev       # Run Server
+```
+Run at http://localhost:3000
+
+#### Backend setup (FastAPI)
+```bash
+cd ../server
+python -m venv venv         # Create virtual environment
+source venv/bin/activate     # Linux/macOS
+# OR
+venv\Scripts\activate        # Windows
+
+pip install -r requirements.txt  # Install Dependencies
+uvicorn main:app --reload        # Run Server
+```
+Run at http://localhost:8000
+
+#### Environment Variables
+.env file in server:
+```bash
+HF_API_KEY = "your_huggingface_api_key"
+APIFY_TOKEN ="your_apify_api_token"
+```
+
+### ☐ Contributing
+___
+Open to contributions!
+- Fork the repository  
+- Create a new branch (`git checkout -b feature-name`)  
+- Commit your changes (`git commit -m 'Add feature'`)  
+- Push to the branch (`git push origin feature-name`)  
+- Create a Pull Request
+
+
