@@ -130,7 +130,7 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({ onAnalysis, onStartLoading,
 
         {result && (
           <button
-            className="mt-8 sm:mt-15 bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white font-semibold py-3 px-10 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300"
+            className="mt-4 sm:mt-15 bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white font-semibold py-3 px-10 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300"
             onClick={handleGo}
           >
             GoData
