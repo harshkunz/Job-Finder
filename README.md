@@ -1,5 +1,4 @@
 ### ☐ Job Finder
-
 *Finding relevant jobs is time-consuming and manually filtering resumes is tedious. It solves this by analyzing resumes using a Large Language Model (LLM) to extract skills, experience, and education. It then recommends matching jobs from top portals like LinkedIn and Naukri. Users can quickly view insights and apply through a simple, responsive interface.*
 
 ### ☐ Tech Stack
@@ -16,10 +15,9 @@
 - **Apify  / Requests** – Scrapes and gathers job postings programmatically
 
 #### Tools / Others
-- **VSCode** – IDE  
-- **npm / Node.js** – Frontend package manager  
-- **Git / GitHub** – Version control
-- **Postman / MCP** – Used for testing and debugging APIs  
+- **VSCode** – IDE   
+- **Postman / MCP** – Used for testing and debugging APIs
+- **Git / GitHub** – Version control  
 
 ### ☐ Project Structure
 ``` Java
