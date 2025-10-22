@@ -32,16 +32,16 @@ const JobFinder: React.FC<JobFinderProps> = ({ jobs, resumeData }) => {
     <section className="h-[85vh] w-full mx-auto overflow-y-auto bg-white rounded-4xl shadow-lg hide-scrollbar relative">
       <div className="sticky top-0 bg-white z-30 border-b border-gray-200 px-6 py-4 flex justify-between items-center">
         <div className="text-center flex-1">
-          <h2 className="text-3xl sm:text-3xl font-semibold text-gray-800 mb-1">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 mb-1">
             Recommended Jobs
           </h2>
-          <p className="text-gray-500 sm:text-md">
+          <p className="text-gray-500 text-sm sm:text-md">
             Explore curated job opportunities based on your profile.
           </p>
         </div>
       </div>
 
-      <div className="px-8 py-6 flex flex-col space-y-6">
+      <div className="px-4 py-4 sm:px-8 sm:py-6 flex flex-col space-y-6">
         { jobs.length === 0 ? (
           <p className="text-center text-gray-500">No jobs found.</p>
         ) : (
