@@ -2,22 +2,9 @@
 *Finding relevant jobs is time-consuming and manually filtering resumes is tedious. It solves this by analyzing resumes using a Large Language Model (LLM) to extract skills, experience, and education. It then recommends matching jobs from top portals like LinkedIn and Naukri. Users can quickly view insights and apply through a simple, responsive interface.*
 
 ### ☐ Tech Stack
-#### Frontend
-- **Next.js 15** – React framework for SSR & App Router  
-- **React.js** – UI library  
-- **Tailwind CSS** – Utility-first styling  
-- **TypeScript** – Type safety  
-
-#### Backend
-- **FastAPI** – Python web framework for APIs  
-- **Python 3.11+** – Core backend language  
-- **Hugging Face API** – AI model for resume analysis    
-- **Apify  / Requests** – Scrapes and gathers job postings programmatically
-
-#### Tools / Others
-- **VSCode** – IDE   
-- **Postman / MCP** – Used for testing and debugging APIs
-- **Git / GitHub** – Version control  
+- **Frontend**: Next.js 15, React.js, TailwindCSS, TypeScript
+- **Backend**: Python 3.11+, FastAPI, Hugging Face (LLMs), Apify
+- **Tools/Version**: Git, MCP
 
 ### ☐ Project Structure
 ``` Java
