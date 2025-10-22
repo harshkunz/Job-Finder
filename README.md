@@ -1,10 +1,8 @@
 ### ☐ Job Finder
-“AI-powered platform that analyzes resumes and recommends matching jobs from top portals.”
 
-<br>
+*Finding relevant jobs is time-consuming and manually filtering resumes is tedious. It solves this by analyzing resumes using a Large Language Model (LLM) to extract skills, experience, and education. It then recommends matching jobs from top portals like LinkedIn and Naukri. Users can quickly view insights and apply through a simple, responsive interface.*
 
 ### ☐ Tech Stack
-___
 #### Frontend
 - **Next.js 15** – React framework for SSR & App Router  
 - **React.js** – UI library  
@@ -58,7 +56,6 @@ Job-Finder/
 ```
 
 ### ☐ Project Workflow
-___
 - User uploads resume via UI, server extracts text by using **Fitz_Library**.  
 - Backend uses a **LLM (Qwen/Qwen3)** to extract key information from the resume.  
 - Job data is scraped from LinkedIn & Naukri using **Apify**.  
@@ -66,7 +63,6 @@ ___
 - Displays results in `JobFinder` with responsive UI and Apply links.
 
 ### ☐ Installation
-___
 #### Clone the repository
 ```bash
 git clone https://github.com/harshkunz/Job-Finder.git
@@ -102,7 +98,6 @@ APIFY_TOKEN ="your_apify_api_token"
 ```
 
 ### ☐ Contributing
-___
 Open to contributions!
 - Fork the repository  
 - Create a new branch (`git checkout -b feature-name`)  
