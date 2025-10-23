@@ -12,9 +12,19 @@
 
 ### ☐ Project Workflow
 - User uploads resume via UI, server extracts text by using **Fitz_Module**.  
-- Backend uses a **LLM (Qwen/Qwen3)** to extract key information from the resume.  
-- Job data is scraped from LinkedIn & Naukri using **Apify**.  
-- Backend returns JSON with resume insights and matched jobs.  
+- Backend uses a **LLM (Qwen/Qwen3)** to extract key information from the resume.
+  
+<p align="center">
+  <img src="/public/Screenshot 2025-10-24 013959.png" alt="System Architecture" height="103">
+</p>
+
+- Job data is scraped from LinkedIn & Naukri using **Apify**.
+- Backend returns JSON with resume insights and matched jobs.
+
+<p align="center">
+  <img src="/public/Screenshot 2025-10-24 013129.png" alt="System Architecture" height="400">
+</p>
+
 - Displays results in `JobFinder` with responsive UI and Apply links.
 
 ### ☐ Project Structure
