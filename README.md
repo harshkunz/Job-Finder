@@ -15,14 +15,14 @@
 - Backend uses a **LLM (Qwen/Qwen3)** to extract key information from the resume.
   
 <p align="center">
-  <img src="/public/Screenshot 2025-10-24 020316.png" alt="System Architecture" height="120">
+  <img src="/public/Screenshot 2025-10-24 020316.png" alt="System Architecture" height="100">
 </p>
 
 - Job data is scraped from LinkedIn & Naukri using **Apify**.
 - Backend returns JSON with resume insights and matched jobs.
 
 <p align="center">
-  <img src="/public/Screenshot 2025-10-24 020527.png" alt="System Architecture" height="350">
+  <img src="/public/Screenshot 2025-10-24 020527.png" alt="System Architecture" height="400">
 </p>
 
 - Displays results in `JobFinder` with responsive UI and Apply links.
