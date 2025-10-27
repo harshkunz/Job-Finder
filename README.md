@@ -59,13 +59,13 @@ Job-Finder/
 ```
 
 ### ☐ Installation
-#### Clone the repository
+#### 1. Clone the repository
 ```bash
 git clone https://github.com/harshkunz/Job-Finder.git
 cd Job-Finder
 ```
 
-#### Frontend setup (Next.js)
+#### 2. Frontend setup (Next.js)
 ```bash
 cd app
 npm install       # Install Dependencies
@@ -73,7 +73,7 @@ npm run dev       # Run Server
 ```
 Run at http://localhost:3000
 
-#### Backend setup (FastAPI)
+#### 3. Backend setup (FastAPI)
 ```bash
 cd ../server
 python -m venv venv         # Create virtual environment
@@ -86,7 +86,7 @@ uvicorn main:app --reload        # Run Server
 ```
 Run at http://localhost:8000
 
-#### Environment Variables
+#### 4. Environment Variables
 .env file in server:
 ```bash
 HF_API_KEY = "your_huggingface_api_key"
