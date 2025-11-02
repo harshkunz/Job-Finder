@@ -1,5 +1,5 @@
 ### ☐ Job Finder
-*Finding relevant jobs is time-consuming and manually filtering resumes is tedious. It solves this by analyzing resumes using a Large Language Model (LLM) to extract skills, experience, and education. It then recommends matching jobs from top portals like LinkedIn and Naukri. Users can quickly view insights and apply through a simple, responsive interface.*
+*It analyzes resumes using a Large Language Model (LLM) to extract skills, experience, and education. It then recommends matching jobs from top portals like LinkedIn and Naukri. Users can quickly view insights and apply through a simple, responsive interface.*
 
 <p align="center">
   <img src="/public/ig.png" alt="System Architecture" height="400">
